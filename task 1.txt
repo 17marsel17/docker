@@ -1,0 +1,86 @@
+1) Загрузите образ busybox последней версии
+
+PS D:\Marina\node.js\2.4> docker pull busybox
+Using default tag: latest
+latest: Pulling from library/busybox
+19d511225f94: Pull complete
+Digest: sha256:3614ca5eacf0a3a1bcc361c939202a974b4902b9334ff36eb29ffe9011aaad83
+Status: Downloaded newer image for busybox:latest
+docker.io/library/busybox:latest
+
+2) Запустите новый контейнер busybox с командой ping сайта netology.ru, и количеством пингов 7, поименуйте контейнер pinger
+
+PS D:\Marina\node.js\2.4> docker run --name pinger -d busybox ping -c 7 netology.ru
+22c2a55bc385a73eb8dc6dbd8536bb2db773ab3c66c4a6ab5365ae12cb8c28e9
+
+3) Выведите на список всех контейнеров - запущенных и остановленных
+
+PS D:\Marina\node.js\2.4> docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
+22c2a55bc385   busybox   "ping -c 7 netology.…"   6 seconds ago   Up 5 seconds             pinger
+
+4) Выведите на экран логи контейнера с именем pinger
+
+PS D:\Marina\node.js\2.4> docker logs pinger
+64 bytes from 188.114.98.160: seq=0 ttl=37 time=24.861 ms
+64 bytes from 188.114.98.160: seq=2 ttl=37 time=25.403 ms
+64 bytes from 188.114.98.160: seq=3 ttl=37 time=21.242 ms
+64 bytes from 188.114.98.160: seq=4 ttl=37 time=23.731 ms
+64 bytes from 188.114.98.160: seq=5 ttl=37 time=20.850 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 20.850/23.556/27.713 ms
+
+5) Запустите второй раз контейнера с именем pinger
+
+PS D:\Marina\node.js\2.4> docker start pinger
+pinger
+
+6) Выведите на список всех контейнеров - запущенных и остановленных
+
+PS D:\Marina\node.js\2.4> docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                     PORTS     NAMES
+22c2a55bc385   busybox   "ping -c 7 netology.…"   41 seconds ago   Exited (0) 2 seconds ago             pinger
+
+7) Выведите на экран логи контейнера с именем pinger
+
+PS D:\Marina\node.js\2.4> docker logs pinger
+PING netology.ru (188.114.98.160): 56 data bytes
+64 bytes from 188.114.98.160: seq=0 ttl=37 time=24.861 ms
+64 bytes from 188.114.98.160: seq=1 ttl=37 time=27.713 ms
+64 bytes from 188.114.98.160: seq=2 ttl=37 time=25.403 ms
+64 bytes from 188.114.98.160: seq=3 ttl=37 time=21.242 ms
+64 bytes from 188.114.98.160: seq=4 ttl=37 time=23.731 ms
+64 bytes from 188.114.98.160: seq=5 ttl=37 time=20.850 ms
+64 bytes from 188.114.98.160: seq=6 ttl=37 time=21.097 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 20.850/23.556/27.713 ms
+64 bytes from 188.114.98.160: seq=0 ttl=37 time=21.279 ms
+64 bytes from 188.114.98.160: seq=2 ttl=37 time=24.829 ms
+64 bytes from 188.114.98.160: seq=3 ttl=37 time=21.380 ms
+64 bytes from 188.114.98.160: seq=4 ttl=37 time=35.631 ms
+64 bytes from 188.114.98.160: seq=5 ttl=37 time=21.319 ms
+64 bytes from 188.114.98.160: seq=6 ttl=37 time=21.777 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 21.279/23.982/35.631 ms
+
+8) Определите по логам общее количество запусков команды ping и какое общее количество отправленых запросов
+
+2 запуска, общее количество отправленых запросов - 14
+
+9) Удалите контейнер с именем pinger
+
+PS D:\Marina\node.js\2.4> docker rm pinger
+pinger
+
+10) Удалите образ busybox
+
+PS D:\Marina\node.js\2.4> docker rmi busybox
+Untagged: busybox:latest
+Untagged: busybox@sha256:3614ca5eacf0a3a1bcc361c939202a974b4902b9334ff36eb29ffe9011aaad83
+Deleted: sha256:62aedd01bd8520c43d06b09f7a0f67ba9720bdc04631a8242c65ea995f3ecac8
